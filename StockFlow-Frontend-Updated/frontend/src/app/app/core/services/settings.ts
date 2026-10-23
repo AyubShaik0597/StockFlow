@@ -10,7 +10,7 @@ export interface OrganizationSettings {
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/settings';
+  private apiUrl = 'https://stockflow-1-22y8.onrender.com/api/settings';
 
   getSettings(): Observable<OrganizationSettings> {
     return this.http.get<OrganizationSettings>(this.apiUrl);
@@ -20,3 +20,4 @@ export class SettingsService {
     return this.http.put<OrganizationSettings>(this.apiUrl, { defaultLowStockThreshold });
   }
 }
+

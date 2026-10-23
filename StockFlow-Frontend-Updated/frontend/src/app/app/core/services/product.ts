@@ -20,7 +20,7 @@ export type ProductPayload = Omit<ProductItem, 'id' | 'createdAt' | 'updatedAt'>
 @Injectable({ providedIn: 'root' })
 export class Product {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/products';
+  private apiUrl = 'https://stockflow-1-22y8.onrender.com/api/products';
 
   getProducts(search = ''): Observable<ProductItem[]> {
     let params = new HttpParams();
@@ -32,3 +32,4 @@ export class Product {
   updateProduct(id: number, data: ProductPayload): Observable<ProductItem> { return this.http.put<ProductItem>(`${this.apiUrl}/${id}`, data); }
   deleteProduct(id: number): Observable<void> { return this.http.delete<void>(`${this.apiUrl}/${id}`); }
 }
+

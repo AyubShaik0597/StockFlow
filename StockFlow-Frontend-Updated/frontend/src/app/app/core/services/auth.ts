@@ -14,7 +14,7 @@ export interface AuthResponse {
 @Injectable({ providedIn: 'root' })
 export class Auth {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'https://stockflow-1-22y8.onrender.com/api/auth';
 
   login(data: { email: string; password: string }): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, data).pipe(
@@ -44,3 +44,4 @@ export class Auth {
   isLoggedIn(): boolean { return !!localStorage.getItem('accessToken'); }
   getToken(): string | null { return localStorage.getItem('accessToken'); }
 }
+

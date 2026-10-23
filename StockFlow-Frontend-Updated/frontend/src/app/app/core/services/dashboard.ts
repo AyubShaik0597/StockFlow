@@ -13,9 +13,10 @@ export interface DashboardSummary {
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/dashboard';
+  private apiUrl = 'https://stockflow-1-22y8.onrender.com/api/dashboard';
 
   getSummary(): Observable<DashboardSummary> {
     return this.http.get<DashboardSummary>(this.apiUrl);
   }
 }
+

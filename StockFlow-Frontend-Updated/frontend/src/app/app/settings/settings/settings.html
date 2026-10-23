@@ -1,0 +1,13 @@
+<div class="page-shell">
+  <nav class="top-nav"><a class="brand" routerLink="/dashboard"><span class="brand-icon">SF</span> StockFlow</a><div class="nav-links"><a routerLink="/dashboard">Dashboard</a><a routerLink="/products">Products</a><a class="active" routerLink="/settings">Settings</a></div><button class="logout-button" type="button" (click)="logout()">Log out</button></nav>
+  <main class="settings-page"><header class="page-header"><p class="eyebrow">WORKSPACE CONFIGURATION</p><h1>Settings</h1><p>Manage the inventory defaults for your organization.</p></header>
+    <p class="loading-message" *ngIf="loading">Loading settings...</p>
+    <div class="alert error" *ngIf="errorMessage" role="alert">{{ errorMessage }} <button type="button" (click)="loadSettings()">Retry</button></div>
+    <section class="settings-card" *ngIf="!loading"><div class="section-heading"><h2>Organization settings</h2><p>These settings apply to your organization.</p></div>
+      <div class="field-group"><label for="organizationName">Organization name</label><input id="organizationName" [value]="organizationName" readonly /><small>Organization names are created during signup.</small></div>
+      <form #settingsForm="ngForm" (ngSubmit)="saveSettings()"><div class="field-group"><label for="threshold">Default low-stock threshold</label><input id="threshold" name="defaultLowStockThreshold" type="number" min="0" step="1" required [(ngModel)]="defaultLowStockThreshold" /><small>Used as the suggested threshold when creating a product. Existing products keep their own threshold.</small></div>
+        <div class="alert success" *ngIf="successMessage" role="status">{{ successMessage }}</div><div class="alert error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div><div class="form-actions"><button class="save-button" type="submit" [disabled]="saving || settingsForm.invalid">{{ saving ? 'Saving...' : 'Save settings' }}</button></div>
+      </form>
+    </section>
+  </main>
+</div>

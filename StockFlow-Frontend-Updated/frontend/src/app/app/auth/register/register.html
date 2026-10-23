@@ -1,0 +1,20 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="brand-mark">SF</div>
+    <h1>Create your StockFlow account</h1>
+    <p class="subtitle">Set up your organization inventory workspace.</p>
+    <form #registerForm="ngForm" (ngSubmit)="onRegister()">
+      <label for="organizationName">Organization name</label>
+      <input id="organizationName" name="organizationName" [(ngModel)]="organizationName" required maxlength="150" placeholder="e.g. Acme Supplies" />
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" [(ngModel)]="email" required email maxlength="254" placeholder="you@example.com" />
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" [(ngModel)]="password" required minlength="8" placeholder="At least 8 characters" />
+      <label for="confirmPassword">Confirm password</label>
+      <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required placeholder="Re-enter your password" />
+      <p class="error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</p>
+      <button type="submit" [disabled]="registerForm.invalid || loading">{{ loading ? 'Creating account...' : 'Create account' }}</button>
+    </form>
+    <p class="login-link">Already have an account? <a routerLink="/login">Sign in</a></p>
+  </div>
+</div>

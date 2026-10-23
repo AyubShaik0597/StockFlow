@@ -1,0 +1,33 @@
+<div class="page-shell">
+  <nav class="top-nav">
+    <a class="brand" routerLink="/dashboard"><span class="brand-icon">SF</span> StockFlow</a>
+    <div class="nav-links">
+      <a class="active" routerLink="/dashboard">Dashboard</a>
+      <a routerLink="/products">Products</a>
+      <a routerLink="/settings">Settings</a>
+    </div>
+    <button class="logout-button" type="button" (click)="logout()">Log out</button>
+  </nav>
+  <main class="dashboard">
+    <header class="dashboard-header">
+      <div><p class="eyebrow">INVENTORY OVERVIEW</p><h1>Dashboard</h1><p>Welcome back. Here's the latest inventory summary for {{ organizationName }}.</p></div>
+      <a routerLink="/products/new" class="add-button">+ Add product</a>
+    </header>
+    <p class="error-banner" *ngIf="errorMessage" role="alert">{{ errorMessage }} <button type="button" (click)="loadDashboard()">Retry</button></p>
+    <p class="loading-message" *ngIf="loading">Loading dashboard...</p>
+    <section class="stats-grid" aria-label="Inventory summary">
+      <article class="stat-card"><span class="stat-label">Total products</span><p>{{ summary.totalProducts }}</p><span class="stat-footnote">Unique products in your catalog</span></article>
+      <article class="stat-card"><span class="stat-label">Total stock quantity</span><p>{{ summary.totalQuantity }}</p><span class="stat-footnote">Units currently on hand</span></article>
+      <article class="stat-card warning"><span class="stat-label">Low-stock products</span><p>{{ summary.lowStockCount }}</p><span class="stat-footnote">At or below their threshold</span></article>
+    </section>
+    <section class="panel low-stock-panel">
+      <div class="panel-heading"><div><h2>Low-stock items</h2><p>Products that may need restocking.</p></div><a routerLink="/products">View all products →</a></div>
+      <div *ngIf="!loading && summary.lowStockProducts.length === 0" class="empty-state"><strong>You're all caught up</strong><span>No low-stock products found.</span></div>
+      <div class="table-wrap" *ngIf="summary.lowStockProducts.length > 0">
+        <table><thead><tr><th>Product</th><th>SKU</th><th>Quantity</th><th>Threshold</th><th>Stock status</th></tr></thead>
+          <tbody><tr *ngFor="let product of summary.lowStockProducts"><td>{{ product.name }}</td><td>{{ product.sku }}</td><td>{{ product.quantityOnHand }}</td><td>{{ product.lowStockThreshold ?? '—' }}</td><td><span class="status-pill">Low stock</span></td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>

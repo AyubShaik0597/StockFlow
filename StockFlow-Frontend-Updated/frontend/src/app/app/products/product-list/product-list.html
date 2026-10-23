@@ -1,0 +1,18 @@
+<div class="page-shell">
+  <nav class="top-nav">
+    <a class="brand" routerLink="/dashboard"><span class="brand-icon">SF</span> StockFlow</a>
+    <div class="nav-links"><a routerLink="/dashboard">Dashboard</a><a class="active" routerLink="/products">Products</a><a routerLink="/settings">Settings</a></div>
+    <button class="logout-button" type="button" (click)="logout()">Log out</button>
+  </nav>
+  <main class="products-page">
+    <header class="page-header"><div><p class="eyebrow">INVENTORY CATALOG</p><h1>Products</h1><p>Manage and search the products in your organization.</p></div><a routerLink="/products/new" class="add-button">+ Add product</a></header>
+    <form class="search-bar" (ngSubmit)="onSearch()"><label class="sr-only" for="productSearch">Search products</label><input id="productSearch" name="searchTerm" [(ngModel)]="searchTerm" placeholder="Search by product name or SKU..." /><button type="submit" [disabled]="loading">Search</button><button class="secondary-button" type="button" (click)="clearSearch()" *ngIf="searchTerm">Clear</button></form>
+    <p class="error-banner" *ngIf="errorMessage" role="alert">{{ errorMessage }}</p>
+    <div *ngIf="loading" class="state-message">Loading products...</div>
+    <div class="table-container" *ngIf="!loading && !errorMessage"><table><thead><tr><th>Product</th><th>SKU</th><th>Quantity</th><th>Selling price</th><th>Stock status</th><th>Actions</th></tr></thead><tbody>
+      <tr *ngFor="let product of products"><td><strong>{{ product.name }}</strong><small class="description" *ngIf="product.description">{{ product.description }}</small></td><td>{{ product.sku }}</td><td>{{ product.quantityOnHand }}</td><td>{{ product.sellingPrice == null ? '—' : (product.sellingPrice | currency:'INR':'symbol':'1.2-2') }}</td><td><span class="status-pill" [class.low-stock]="isLowStock(product)" [class.in-stock]="!isLowStock(product)">{{ isLowStock(product) ? 'Low stock' : 'In stock' }}</span></td><td class="actions"><a [routerLink]="['/products/edit', product.id]">Edit</a><button type="button" class="delete-button" (click)="deleteProduct(product.id)">Delete</button></td></tr>
+      <tr *ngIf="products.length === 0"><td colspan="6" class="empty-state">{{ searchTerm ? 'No products match your search.' : 'No products yet. Add your first product to get started.' }}</td></tr>
+    </tbody></table></div>
+    <p class="result-count" *ngIf="!loading">{{ products.length }} product{{ products.length === 1 ? '' : 's' }} shown</p>
+  </main>
+</div>
